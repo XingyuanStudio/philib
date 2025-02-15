@@ -1,0 +1,9 @@
+Library/nodejs/
+Library/python/
+Library/*.txt
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pyw
+*.pyz
