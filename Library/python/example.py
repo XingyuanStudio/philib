@@ -15,9 +15,9 @@ phigros.get_save.restype = ctypes.c_char_p
 phigros.load_difficulty.argtypes = ctypes.c_void_p,
 phigros.get_b19.argtypes = ctypes.c_void_p,
 phigros.get_b19.restype = ctypes.c_char_p
-# phigros.re8.argtypes = ctypes.c_void_p,
+# phigros.re8.argtypes = ctypes.c_void_p,  # 启用会导致报错，应该是src/phigros.cxx中定义的函数void re8(struct Handle *handle)被注释掉的
 
-sessionToken = b"ztl8rh36krtgro724jo83f3o5"
+sessionToken = b"ztl8rh36krtgro724jo83f3o5"  
 handle = phigros.get_handle(sessionToken)   # 获取handle,申请内存,参数为sessionToken
 # print(handle)
 # print(phigros.get_nickname(handle))         # 获取玩家昵称
