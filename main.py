@@ -68,11 +68,7 @@ class PhigrosGet:
         """返回用户 B19 数据"""
         return self.b19
 
-    def calc_best_n(self, n: int) -> dict:
-        """返回用户 BestN 数据，也就是youyou"""
-        b27 = dict()
-        for song_name, records in self.game_record.items():
-            for record in records:...
+    def calc_best_n(self, phi_n: int = 3, best_n: int = 27) -> dict:...  # TODO @machenxiu
                 
         
     def get_game_record(self) -> Dict[str, List[Dict[str, Union[int, float]]]]:
@@ -128,6 +124,7 @@ class PhigrosGet:
             except:
                 pass
 
+    
 
 # Example usage
 if __name__ == "__main__":
