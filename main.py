@@ -98,10 +98,10 @@ class PhigrosGet:
         if hasattr(self, 'handle') and self.handle:
             phigros.free_handle(self.handle)
 
-sessionToken = ""  # 使用实际的 token
+sessionToken = "ztl8rh36krtgro724jo83f3o5"  # 使用实际的 token
 client = PhigrosGet(sessionToken)
 
-# with open("2.json", "w") as f:
-#     json.dump(client.get_game_record(), f, indent=4)
+with open("2.json", "w") as f:
+    json.dump(client.get_game_record(), f, indent=4)
 
 
