@@ -1,33 +1,38 @@
 import ctypes
+import platform
 import json
 from typing import Dict, List, Union
 
+
+system = platform.system()
+if system == "Windows":
+    lib_name = "Library/phigros.dll"
+elif system == "Linux":
+    lib_name = "Library/libphigros-64.so"
+else:
+    raise OSError("Unsupported operating system")
+
+
 try:
-    phigros = ctypes.CDLL("Library/phigros.dll")
-except Exception as edll:
-    try:
-        phigros = ctypes.CDLL("Library/libphigros-64.so")
-    except Exception as eso:
-        print("Error: Failed to load phigros library")
-        print("Please see documentation for more information")
-        print("Error 1:", edll)
-        print("Error 2:", eso)
-        raise
+    phigros = ctypes.CDLL(lib_name)
+except FileNotFoundError:
+    raise FileNotFoundError(
+        "Error: Failed to load phigros.dll or libphigros-64.so"
+        "Please see ./Library/README.md and ./Library/PhigrosLibrary.md or for more information. You should compile the library yourself. See also https://github.com/7aGiven/PhigrosLibrary."
+    )
+else:
+    phigros.get_handle.argtypes = [ctypes.c_char_p]
+    phigros.get_handle.restype = ctypes.c_void_p
+    phigros.free_handle.argtypes = [ctypes.c_void_p]
+    phigros.get_summary.argtypes = [ctypes.c_void_p]
+    phigros.get_summary.restype = ctypes.c_char_p
+    phigros.get_save.argtypes = [ctypes.c_void_p]
+    phigros.get_save.restype = ctypes.c_char_p
+    phigros.load_difficulty.argtypes = [ctypes.c_char_p]
+    phigros.get_b19.argtypes = [ctypes.c_void_p]
+    phigros.get_b19.restype = ctypes.c_char_p
 
-# 设置函数签名
-phigros.get_handle.argtypes = [ctypes.c_char_p]
-phigros.get_handle.restype = ctypes.c_void_p
-phigros.free_handle.argtypes = [ctypes.c_void_p]
-phigros.get_summary.argtypes = [ctypes.c_void_p]
-phigros.get_summary.restype = ctypes.c_char_p
-phigros.get_save.argtypes = [ctypes.c_void_p]
-phigros.get_save.restype = ctypes.c_char_p
-phigros.load_difficulty.argtypes = [ctypes.c_char_p]
-phigros.get_b19.argtypes = [ctypes.c_void_p]
-phigros.get_b19.restype = ctypes.c_char_p
 
-# 先加载难度数据
-phigros.load_difficulty(bytes("Library/difficulty.tsv", "utf-8"))
 
 class PhigrosGet:
     def __init__(self, sessionToken: str|bytes):
@@ -95,13 +100,14 @@ class PhigrosGet:
         return game_record
 
     def __del__(self):
-        if hasattr(self, 'handle') and self.handle:
-            phigros.free_handle(self.handle)
-
-sessionToken = "ztl8rh36krtgro724jo83f3o5"  # 使用实际的 token
-client = PhigrosGet(sessionToken)
-
-with open("2.json", "w") as f:
-    json.dump(client.get_game_record(), f, indent=4)
+        if hasattr(self, "handle") and self.handle:
+            try:
+                phigros.free_handle(self.handle)
+            except:
+                pass
 
 
+# Example usage
+if __name__ == "__main__":
+    user = PhigrosGet("Your sessionToken")
+    print(user.get_save())
