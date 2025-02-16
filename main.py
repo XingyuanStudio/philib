@@ -10,6 +10,13 @@ except:
         print("Please see ./Library/README.md and ./Library/PhigrosLibrary.md or for more information. You should compile the library yourself. See also https://github.com/7aGiven/PhigrosLibrary.")
         raise
         exit()
+else:
+    phigros.get_handle.argtypes = [ctypes.c_char_p]
+    phigros.get_handle.restype = ctypes.c_void_p
+
+    phigros.free_handle.argtypes = [ctypes.c_void_p]
+    phigros.free_handle.restype = ctypes.c_void_p
+
 
 
 class PhigrosGet:
