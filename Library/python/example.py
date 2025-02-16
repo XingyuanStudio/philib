@@ -1,7 +1,7 @@
 import ctypes
 
 # phigros = ctypes.CDLL("../libphigros-64.so")
-phigros = ctypes.CDLL("./phigros.dll")
+phigros = ctypes.CDLL("Library/phigros.dll")
 print(phigros)
 phigros.get_handle.argtypes = ctypes.c_char_p,
 phigros.get_handle.restype = ctypes.c_void_p

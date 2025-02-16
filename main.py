@@ -15,7 +15,18 @@ except:
 class PhigrosGet:
     def __init__(self, sessionToken: str):
         self.sessionToken = bytes(sessionToken, "utf-8")
-        self.handle = phigros.get_handle(sessionToken)
+        self.handle = phigros.get_handle(self.sessionToken)
+        if not self.handle:
+            raise RuntimeError("Failed to get handle from phigros library")
 
     def __del__(self):
-        phigros.free_handle(self.handle)
+        if hasattr(self, 'handle') and self.handle:
+            try:
+                phigros.free_handle(self.handle)
+            except:
+                pass
+            
+    
+        
+# PhigrosGet("ztl8rh36krtgro724jo83f3o5")
+

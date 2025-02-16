@@ -1,39 +1,65 @@
 # Philib
 
-Philib 是一个用于获取 Phigros 玩家云存档数据的 Python 模块。
+Philib 是一个用于获取 Phigros 玩家云存档数据的 Python 模块。本模块基于 [PhigrosLibrary](https://github.com/7aGiven/PhigrosLibrary) 开发，目的是封装一个更易用的接口，便于 Phigros 玩家查询自己的数据。
 
-本模块基于 [PhigrosLibrary](https://github.com/7aGiven/PhigrosLibrary) 开发。目的是封装一个有更多功能的接口，便于 Phigros 玩家查询自己的数据。
+## 环境要求
 
-## 项目准备
+本项目需要以下环境：
 
-因为 PhigrosLibrary 是 C 语言编写的，所以需要先安装 CMake（包含 NMake 的）。同时，您还必须安装好了 Python。
+1. **Python**: 任意现代版本
 
-CMake 的安装方法：
+如果需要自行编译核心库，则需要以下环境： 2. **CMake**: 用于编译核心库
 
-- 您可以前往[CMake 官网](https://cmake.org/download/)下载安装包。
+- 从 [CMake 官网](https://cmake.org/download/) 下载安装
 
-NMake 的安装方法：
+3. **NMake**: 用于 Windows 环境下的编译
+   - 方案 1: 安装 Visual Studio（包含 NMake）
+   - 方案 2: 使用项目提供的独立 NMake
+     - 在 `Librarys/` 目录下找到 `NMake.exe`
+     - 将其添加到系统 PATH 环境变量
 
-- NMake 是集成在 Visual Studio 中的，如果您知道如何配置并使用 Visual Studio，那么您可以跳过此步骤。
+## 核心库准备
 
-- 在`Librarys/`文件夹下，您可以找到`NMake.exe`文件，这是被分离好的 NMake。您可以将其放在您希望放置的地方，并添加到 PATH 环境变量中。
+项目依赖 PhigrosLibrary 的核心库文件：
 
-> [Tips]:
-> AI 说，您可以前往[NMake 官网](https://sourceforge.net/projects/gnuwin32/files/make/)下载安装包。但是，我不知道此网址是否是我们需要的，也不知道此网址是否是正确的 NMake 官网。
+- Windows: `phigros.dll`
+- Linux: `libphigros-64.so`
 
-PhigrosLibrary 的核心是`phigros.dll`文件（或`libphigros-64.so`文件，在 Linux 环境下）。您可以在将`Library/`文件夹下找到此文件。
+获取核心库有以下方式：
 
-> 如果找不到或报错，您可以前往[Releases - PhigrosLibrary](https://github.com/7aGiven/PhigrosLibrary/releases)查看。
+1. 直接使用
 
-> 此外，您也可以自行构建`phigros.dll`文件或`libphigros-64.so`文件。请参阅[Library/PhigrosLibrary.md](Library/PhigrosLibrary.md)，在[PhigrosLibrary 的 GitHub 仓库](https://github.com/7aGiven/PhigrosLibrary/blob/main/PhigrosLibrary.md)中也可以查看。
+   - 在 `Library/` 目录下查找对应文件
 
-编写代码时，请参阅[PhigrosLibrary 的示例代码](Library/python/example.py)。
+2. 下载编译好的版本
 
-为了保证`PhigrosLibrary`能够正常运行且您能够自行更改我们的代码，`PhigrosLibrary`提供的源码、游戏信息及支持库等文件我们并没有删去。
+   - 访问 [PhigrosLibrary Releases](https://github.com/7aGiven/PhigrosLibrary/releases)
+   - 下载对应平台的文件
 
-`PhigrosLibrary`的源码、游戏信息及支持库等文件在`Library/`文件夹下。
+3. 自行编译
+   - 参考 [Library/PhigrosLibrary.md](Library/PhigrosLibrary.md) 的编译说明（或查看 [PhigrosLibrary GitHub](https://github.com/7aGiven/PhigrosLibrary/blob/main/PhigrosLibrary.md)）
 
-##
+## 项目主要结构
+
+```bash
+philib
+├── Library/
+│   ├── python/         # Python 示例代码
+│   ├── src/            # 核心库源码
+│   ├── script-py/      # 支持脚本
+│   │   Phigros.dll         # 支持库(Windows)
+│   │   libphigros-64.so         # 支持库(Linux)
+│  .gitignore
+│  main.py
+│  README.md
+│  __init__.py
+```
+
+为方便开发，我们保留了 PhigrosLibrary 的完整支持文件，您可以：
+
+- 参考示例代码：[Library/python/example.py](Library/python/example.py)
+- 查看或修改源码：`Library/src/` 目录
+- 查看、使用或修改支持工具：`Library/script-py/` 目录
 
 ### 提交规范
 
@@ -42,7 +68,6 @@ PhigrosLibrary 的核心是`phigros.dll`文件（或`libphigros-64.so`文件，�
 ```
 <type>: <description>
 [optional body]
-[optional footer(s)]
 ```
 
 提交类型（type）必须是以下之一：
