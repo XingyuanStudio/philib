@@ -106,23 +106,21 @@ class PhigrosGet:
         self.game_record = game_record
         
     @staticmethod
-    def calc_chart_score(songid: str, acc: float, difficulty: str = None) -> int:
-        """计算谱面在计算rks时的得分
+    def calc_chart_score(acc: float, difficulty: str = None) -> int:
+        """计算谱面rks
         
         Args:
-            songid: 歌曲id
             acc: 准确度
-            rated: 谱面定数，留空以从Library/difficulty.tsv中获取
+            difficulty: 谱面定数
             
         Returns:
-            int: 谱面在计算rks时的得分
+            float: 计算谱面rks
         """
-        if difficulty is None:
-            difficulty = phigros.get_difficulty(songid)
-        
-        
+        return ((acc-55)/45)*((acc-55)/45)*difficulty
             
-
+    def calc_best_n(self, phi_n: int = 3, best_n: int = 27) -> dict: 
+        pass
+    
     def __del__(self):
         if hasattr(self, "handle") and self.handle:
             try:
