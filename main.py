@@ -5,6 +5,7 @@ from typing import Dict, List, Union
 from calc_best_n import calc_best_n
 from level_tsv2json import level_tsv2json
 from calc_rks import calc_rks
+from improving_suggestion import improving_suggestion
 
 
 system = platform.system()
@@ -127,11 +128,10 @@ class PhigrosGet:
                 }
         self.game_record = game_record
 
-    def get_rks_suggest(
-        self, rks_wanted: float = 0.01
-    ) -> dict: ...  # TODO @Xingyuan55  See #2
+    def improving_suggestion(self, rks_wanted: float = 0.01, song_num: int = 1) -> dict:  # TODO @Xingyuan55  See #2
+        return improving_suggestion(self, rks_wanted, song_num)
 
-    def calc_best_n(self, phi_n: int = 3, best_n: int = 27) -> dict:
+    def best_n(self, phi_n: int = 3, best_n: int = 27) -> dict:
         return calc_best_n(self, phi_n, best_n)
 
     def __del__(self):
@@ -144,14 +144,25 @@ class PhigrosGet:
 
 # Example usage
 if __name__ == "__main__":
-    user = PhigrosGet("Your Session Token")
+    # user = PhigrosGet("ztl8rh36krtgro724jo83f3o5")
+    user = PhigrosGet("41dtbqsivitthcmrfhn817ntl")
     # print(user.game_record)
     # with open("b191.json", "w", encoding="utf-8") as f:
     #     json.dump(user.b19, f, indent=4, ensure_ascii=False)
     # with open("game_record2.json", "w", encoding="utf-8") as f:
     #     json.dump(user.game_record, f, indent=4, ensure_ascii=False)】
-    b30 = user.calc_best_n()
+    b30 = user.best_n()
     print("自行计算", calc_rks(b30))
     print("API获取", user.summary["rankingScore"])
     # with open("bestn1.json", "w", encoding="utf-8") as f:
-    #     json.dump(user.calc_best_n(), f, indent=4, ensure_ascii=False)
+    #     json.dump(b30, f, indent=4, ensure_ascii=False)
+    with open("improving_suggestion22Xingyuan55.json", "w", encoding="utf-8") as f:
+        json.dump(user.improving_suggestion(-0.01, 1), f, indent=4, ensure_ascii=False)
+    # print("1首歌：")
+    # result1 = user.improving_suggestion(3, 1)
+    # print(result1["ATHAZA.LeaF"]["in"])
+
+    # print("30首歌：")
+    # result30 = user.improving_suggestion(1, 20)
+    # print(result30["ATHAZA.LeaF"]["in"])
+

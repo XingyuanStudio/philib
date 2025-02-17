@@ -61,7 +61,11 @@ philib
 - 查看或修改源码：`Library/src/` 目录
 - 查看、使用或修改支持工具：`Library/script-py/` 目录
 
-## 提交规范
+PhigrosLibrary 使用了 GNU GPLv3 许可证，据此，Philib 也使用 GNU GPLv3 许可证。
+
+## 项目规范
+
+### 提交规范
 
 本项目使用 [Conventional Commits](https://www.conventionalcommits.org/) 规范进行代码提交。提交信息的格式如下：
 
@@ -86,17 +90,17 @@ philib
 - `revert`: 回退或重提以前的提交
 - `wip`: 工作进行中，包含未完成的功能
 
-## Git 远程协作指南
+### Git 远程协作指南（自留）
 
-### 1. 基本概念
+#### 1. 基本概念
 
 - `origin`: 远程仓库的默认名称
 - `master`: 主分支
 - `HEAD`: 当前分支的最新提交
 
-### 2. 日常工作流程
+#### 2. 日常工作流程
 
-#### 2.1 开始工作前
+##### 2.1 开始工作前
 
 ```bash
 # 1. 拉取最新代码
@@ -106,7 +110,7 @@ git pull origin master
 git checkout -b feature/your-feature
 ```
 
-#### 2.2 提交更改
+##### 2.2 提交更改
 
 ```bash
 # 1. 查看更改
@@ -120,7 +124,7 @@ git add .                        # 添加所有更改
 git commit -m "feat: 添加新功能"  # 遵循提交规范
 ```
 
-#### 2.3 推送到远程
+##### 2.3 推送到远程
 
 ```bash
 # 推送到主分支
@@ -130,9 +134,9 @@ git push origin master
 git push origin feature/your-feature
 ```
 
-### 3. 常见问题处理
+#### 3. 常见问题处理
 
-#### 3.1 合并冲突
+##### 3.1 合并冲突
 
 ```bash
 # 1. 保存当前工作
@@ -150,7 +154,7 @@ git commit -m "merge: 解决冲突"
 git push origin master
 ```
 
-#### 3.2 撤销更改
+##### 3.2 撤销更改
 
 ```bash
 # 撤销未提交的更改
@@ -163,7 +167,7 @@ git reset --soft HEAD^
 git revert <commit-id>
 ```
 
-#### 一次冲突的解决实例
+##### 一次冲突的解决实例
 
 1. 先保存你的本地更改：`git stash save "添加 Issue 引用到 TODO 注释"`
 2. 拉取远程更改：`git pull origin master`
@@ -182,7 +186,7 @@ git pull 会更新你的本地代码
 git stash pop 会恢复你保存的更改
 如果有冲突，需要手动解决
 
-### 4. 最佳实践
+#### 4. 最佳实践
 
 1. **经常同步**
 
@@ -206,7 +210,7 @@ git stash pop 会恢复你保存的更改
    - 不提交编译产物和个人配置
    - 保持仓库整洁
 
-### 5. 提交规范示例
+#### 5. 提交规范示例
 
 ```bash
 # 新功能
