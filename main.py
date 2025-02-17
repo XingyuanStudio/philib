@@ -133,7 +133,7 @@ class PhigrosGet:
         """
         return ((acc - 55) / 45) * ((acc - 55) / 45) * difficulty
 
-    def calc_best_n(self, phi_n: int = 3, best_n: int = 27) -> dict:
+    def calc_best_n(self, phi_n: int = 3, best_n: int = 27) -> dict:  # TODO @machenxiu
         """
         {
             "phi_list":[
@@ -158,7 +158,7 @@ class PhigrosGet:
             ]
         }
         """
-        pass
+
 
     def get_rks_suggest(
         self, rks_wanted: float = 0.01
