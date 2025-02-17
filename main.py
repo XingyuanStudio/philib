@@ -71,34 +71,56 @@ class PhigrosGet:
     def calc_best_n(self, phi_n: int = 3, best_n: int = 27) -> dict:...  # TODO @machenxiu
                 
         
-    def get_game_record(self) -> Dict[str, List[Dict[str, Union[int, float]]]]:
+    def get_game_record(self) -> Dict[str, Dict[str, Dict[str, Union[int, float]]]]:
         """返回经整理过的用户游戏记录数据
         
         Returns:
             Dict[str, List[Dict[str, Union[int, float]]]]: 游戏记录
             - 键: 曲目名称 (str)
-            - 值: 难度记录列表 (List[4])
+            - 值: 难度记录列表 (Dict[str, Dict])
                 - 每个难度记录是一个字典 (Dict)
                     - score: 分数 (int)
                     - acc: 准确度 (float)
                     - fc: 是否FC (int)
+                    
+        Example:
+        {
+            "song_name": {
+                "ez": {
+                    "score": 100000,
+                    "acc": 100.0,
+                    "fc": 1
+                },
+                "hd": {
+                    ...
+                },
+                "in": {
+                    ...
+                },
+                "at": {
+                    ...
+                },
+                
+            }
+        }
         """
         if self.game_record:  # 如果游戏记录已经存在，则直接返回，避免重复计算
             return self.game_record
         
-        game_record: Dict[str, List[Dict[str, Union[int, float]]]] = {}
+        game_record: Dict[str, Dict[str, Dict[str, Union[int, float]]]] = {}
         
         for song_name, records in self.save["gameRecord"].items():
-            game_record[song_name] = []
-            # 每3个元素是一个难度的记录（分数、准确度、是否FC）
+            game_record[song_name] = {}
+            # 每3个元素是一个难度的记录（分数、准确度、是否FC），包裹在字典中
             for i in range(0, len(records), 3):  
                 score, acc, fc = records[i:i+3]
-                game_record[song_name].append({  
+                difficulty_map = {0: "ez", 3: "hd", 6: "in", 9: "at"}
+                difficulty = difficulty_map[i]
+                game_record[song_name][difficulty] = {  
                     "score": score,
                     "acc": acc,
                     "fc": fc
-                })
-        
+                }
         self.game_record = game_record
         
     @staticmethod
@@ -130,5 +152,7 @@ class PhigrosGet:
 if __name__ == "__main__":
     user = PhigrosGet("ztl8rh36krtgro724jo83f3o5")
     print(user.game_record)
-    with open("b191.json", "w", encoding="utf-8") as f:
-        json.dump(user.b19, f, indent=4, ensure_ascii=False)
+    # with open("b191.json", "w", encoding="utf-8") as f:
+    #     json.dump(user.b19, f, indent=4, ensure_ascii=False)
+    with open("game_record2.json", "w", encoding="utf-8") as f:
+        json.dump(user.game_record, f, indent=4, ensure_ascii=False)
