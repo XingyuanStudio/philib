@@ -32,43 +32,5 @@ def improving_suggestion(self, rks_wanted: float = 0.01, song_num: int = 1) -> D
     """
     suggestions: Dict[str, Dict[str, float]] = {}
     
-    # 获取当前 b30
-    current_b30 = self.best_n()
-    lowest_rks = min(song["rks"] for song in current_b30["best_list"])
-    
-    # 计算每首歌需要提升的 RKS
-    single_rks_needed = (rks_wanted * 30) / song_num
-    
-    # 计算每个谱面需要的 acc
-    for song_name, levels in self.chart_level_data.items():
-        suggestions[song_name] = {}
-        
-        # 获取当前成绩
-        current_scores = {}
-        if song_name in self.game_record:
-            for diff, data in self.game_record[song_name].items():
-                current_scores[diff] = data["acc"]
-        
-        for diff, level in levels.items():
-            if level <= 0:
-                suggestions[song_name][diff] = None
-                continue
-            
-            # 获取当前 RKS
-            current_acc = current_scores.get(diff, 0)
-            current_rks = ((current_acc/100 - 0.55)/0.45)**2 * level
-            
-            # 计算目标 RKS：基于当前 RKS 或 B30 最低分（取较大值）
-            target_single_rks = max(current_rks, lowest_rks) + single_rks_needed
-            
-            # 计算所需 acc
-            min_acc = 45 * math.sqrt(target_single_rks/level) + 55
-            
-            # 如果目标 acc 超过 100，就不需要推分
-            if min_acc > 100:
-                suggestions[song_name][diff] = None
-            else:
-                suggestions[song_name][diff] = min_acc
-            
     return suggestions
 
