@@ -1,4 +1,4 @@
-def calc_chart_score(acc: float, level: float = None) -> float:
+def calc_chart_rks(acc: float, level: float = None) -> float:
     """计算谱面rks
     
     Args:
@@ -8,5 +8,5 @@ def calc_chart_score(acc: float, level: float = None) -> float:
     Returns:
         float: 计算谱面rks
     """
-    return ((acc - 55) / 45) * ((acc - 55) / 45) * level
+    return 0 if acc < 0.7 else ((acc - 55) / 45) * ((acc - 55) / 45) * level
  

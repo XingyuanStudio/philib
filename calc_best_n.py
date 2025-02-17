@@ -1,4 +1,4 @@
-from calc_chart_score import *
+from calc_chart_rks import *
 
 
 def calc_best_n(self, phi_n, best_n):
@@ -39,10 +39,7 @@ def calc_best_n(self, phi_n, best_n):
                         "level": level,
                         "level": self.chart_level_data[every[0]][level],
                         "acc": every[1][level]["acc"],
-                        "rks": calc_chart_score(
-                            every[1][level]["acc"],
-                            self.chart_level_data[every[0]][level],
-                        ),
+                        "rks": calc_chart_rks(every[1][level]["acc"], self.chart_level_data[every[0]][level]),
                     }
                 )
             all_list.append(
@@ -51,10 +48,7 @@ def calc_best_n(self, phi_n, best_n):
                     "level": level,
                     "level": self.chart_level_data[every[0]][level],
                     "acc": every[1][level]["acc"],
-                    "rks": calc_chart_score(
-                        every[1][level]["acc"],
-                        self.chart_level_data[every[0]][level],
-                    ),
+                    "rks": calc_chart_rks(every[1][level]["acc"], self.chart_level_data[every[0]][level]),
                 }
             )
 

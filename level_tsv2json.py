@@ -52,5 +52,5 @@ def level_tsv2json(tsv_path: str, complete_width: int = 5) -> Dict[str,Dict[str,
 
 if __name__ == "__main__":
     with open("level_data.json", "w", encoding="utf-8") as f:
-        json.dump(tsv2json("Library/level_data.tsv"), f, indent=4, ensure_ascii=False)
+        json.dump(level_tsv2json("Library/level_data.tsv"), f, indent=4, ensure_ascii=False)
 
