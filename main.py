@@ -3,6 +3,7 @@ import platform
 import json
 from typing import Dict, List, Union
 from calc_best_n import calc_best_n
+from level_tsv2json import tsv2json
 
 
 system = platform.system()
@@ -33,20 +34,9 @@ else:
     phigros.get_b19.argtypes = [ctypes.c_void_p]
     phigros.get_b19.restype = ctypes.c_char_p
 
-# 先加载难度数据
-phigros.load_difficulty(bytes("Library/level_data.tsv", "utf-8"))
-
-def calc_chart_score(acc: float, difficulty: str = None) -> int:
-    """计算谱面rks
-    
-    Args:
-        acc: 准确度
-        difficulty: 谱面定数
-        
-    Returns:
-        float: 计算谱面rks
-    """
-    return ((acc - 55) / 45) * ((acc - 55) / 45) * difficulty
+# 先加载定数数据
+phigros.load_level_data = phigros.load_difficulty  # 重命名函数
+phigros.load_level_data(bytes("Library/level_data.tsv", "utf-8"))
 
 class PhigrosGet:
     def __init__(self, sessionToken: str|bytes):
@@ -135,10 +125,6 @@ class PhigrosGet:
                 }
         self.game_record = game_record
         
-    @staticmethod
-
-
-
     def get_rks_suggest(
         self, rks_wanted: float = 0.01
     ) -> dict: ...  # TODO @Xingyuan55  See #2
@@ -150,7 +136,6 @@ class PhigrosGet:
             except:
                 pass
 
- 
 
 # Example usage
 if __name__ == "__main__":

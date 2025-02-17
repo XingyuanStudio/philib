@@ -61,7 +61,7 @@ philib
 - 查看或修改源码：`Library/src/` 目录
 - 查看、使用或修改支持工具：`Library/script-py/` 目录
 
-### 提交规范
+## 提交规范
 
 本项目使用 [Conventional Commits](https://www.conventionalcommits.org/) 规范进行代码提交。提交信息的格式如下：
 

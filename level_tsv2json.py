@@ -3,20 +3,20 @@ import csv
 from typing import Dict
 
 def tsv2json(tsv_path: str, complete_width: int = 5) -> Dict[str,Dict[str,float]]:
-    """将难度数据 tsv 转换为字典格式
+    """将谱面定数数据 tsv 转换为字典格式
     
     Args:
         tsv_path: tsv 文件路径
         complete_width: 补全宽度，默认为5（包含曲名和4个难度）
         
     Returns:
-        Dict[str, Dict[str, float]]: 难度数据
+        Dict[str, Dict[str, float]]: 谱面定数数据
         - 键: 曲目名称 (str)
-        - 值: 难度字典
-            - ez: EZ 难度定数 (float)
-            - hd: HD 难度定数 (float)
-            - in: IN 难度定数 (float)
-            - at: AT 难度定数 (float 或 0.0)
+        - 值: 难度定数字典
+            - ez: EZ 难度的定数 (float)
+            - hd: HD 难度的定数 (float)
+            - in: IN 难度的定数 (float)
+            - at: AT 难度的定数 (float 或 0.0)
 
     Example:
         TSV input:
