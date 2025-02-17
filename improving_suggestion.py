@@ -2,7 +2,7 @@ from typing import Dict
 import math
 
 
-def improving_suggestion(self, rks_wanted: float = 0.01) -> Dict[str, Dict[str, float]]:
+def improving_suggestion(self, rks_wanted: float = 0.01, song_num: int = 1) -> Dict[str, Dict[str, float]]:
     """推分建议
 
     TODO  @Xingyuan55  See #2
@@ -40,8 +40,21 @@ def improving_suggestion(self, rks_wanted: float = 0.01) -> Dict[str, Dict[str, 
     current_b30 = self.best_n()
     b27_rks = current_b30["best_list"][26]["rks"] if len(current_b30["best_list"]) > 26 else 0
     
-    # 计算最小需要提升的 RKS
-    min_up_rks = rks_wanted
+    # 获取最高 phi 分
+    phi_list = [song for song in current_b30["phi_list"] if song]
+    b0_rks = max((song["rks"] for song in phi_list), default=0) if phi_list else 0
+    
+    # 计算最小提升量（考虑四舍五入）
+    current_rks = self.rks
+    min_up_rks = math.floor(current_rks * 100) / 100 + 0.005 - current_rks
+    if min_up_rks < 0:
+        min_up_rks += 0.01
+    
+    # 使用最小提升量和目标提升量中的较大值
+    rks_wanted = max(rks_wanted, min_up_rks)
+    
+    # 计算每首歌需要提升的基础 RKS（不含 *30）
+    single_rks_base = rks_wanted / song_num
     
     # 遍历所有谱面
     for song_name, levels in self.chart_level_data.items():
@@ -67,14 +80,18 @@ def improving_suggestion(self, rks_wanted: float = 0.01) -> Dict[str, Dict[str, 
                 current_rks = 0
             
             # 计算目标 RKS：使用当前 RKS 和 B27 最低分中的较大值
-            target_rks = max(b27_rks, current_rks) + min_up_rks * 30
+            target_rks = max(b27_rks, current_rks) + single_rks_base * 30
             
             # 计算所需 acc
             needed_acc = 45 * math.sqrt(target_rks/level) + 55
             
             # 如果需要的 acc 不合理或者低于当前 acc，就不推荐
             if needed_acc > 100 or (current_acc > 0 and needed_acc <= current_acc):
-                suggestions[song_name][diff] = None
+                # 对于高定数谱面，如果定数足够高，建议尝试 100%
+                if level > b0_rks + single_rks_base * 30:
+                    suggestions[song_name][diff] = 100.0
+                else:
+                    suggestions[song_name][diff] = None
             else:
                 suggestions[song_name][diff] = needed_acc
     

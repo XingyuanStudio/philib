@@ -2,8 +2,27 @@ from calc_chart_rks import *
 
 
 def calc_best_n(self, phi_n, best_n):
-    """
-    {
+    """计算用户最佳成绩
+
+    Args:
+        phi_n: phi值数量（通常为3，即Pure Perfect的数量）
+        best_n: 最佳成绩数量（通常为27，与phi_n组成B30）
+
+    Returns:
+        Dict[str, List[Dict[str, Union[str, float]]]]: 包含phi_list和best_list的字典
+        - phi_list: Pure Perfect成绩列表
+            - song_name: 曲目名称
+            - level: 难度等级(ez/hd/in/at)
+            - difficulty: 谱面定数
+            - acc: 准确度
+            - rks: 单曲Rating
+        - best_list: 最佳成绩列表（结构同上）
+
+    Note:
+        返回的成绩列表已按rks降序排序
+        
+    Return Example:
+     {
         "phi_list":[
             {
                 "song_name": 曲目名称,

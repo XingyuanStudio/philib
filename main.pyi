@@ -22,6 +22,22 @@ class PhigrosGet:
 
     def get_rks_suggest(self, rks_wanted: float = 0.01) -> dict: ...
 
+    def best_n(self, phi_n: int = 3, best_n: int = 27) -> Dict[str, List[Dict[str, Union[str, float]]]]: ...
+    """计算用户最佳成绩
+    
+    Args:
+        phi_n: phi值数量（通常为3，即Pure Perfect的数量）
+        best_n: 最佳成绩数量（通常为27，与phi_n组成B30）
+    """
+
+    def improving_suggestion(self, rks_wanted: float = 0.01, song_num: int = 1) -> Dict[str, Dict[str, Optional[float]]]: ...
+    """推分建议算法
+    
+    Args:
+        rks_wanted: 期望提升的Rating数值
+        song_num: 期望通过多少首歌提升Rating
+    """
+
     def __del__(self) -> None: ...
 
 
