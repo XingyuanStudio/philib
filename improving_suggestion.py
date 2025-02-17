@@ -2,7 +2,7 @@ from typing import Dict
 import math
 
 
-def improving_suggestion(self, rks_wanted: float = 0.01, song_num: int = 1) -> Dict[str, Dict[str, float]]:
+def improving_suggestion(self, rks_wanted: float = 0.01) -> Dict[str, Dict[str, float]]:
     """推分建议
 
     TODO  @Xingyuan55  See #2
@@ -29,17 +29,21 @@ def improving_suggestion(self, rks_wanted: float = 0.01, song_num: int = 1) -> D
             },
             ...
         }
+        
+    代码借鉴：
+    [phi-plugin](https://github.com/Catrong/phi-plugin) 之中的
+    [model/class/Save.js](https://github.com/Catrong/phi-plugin/blob/main/model/class/Save.js#L386)
     """
     suggestions: Dict[str, Dict[str, float]] = {}
     
-    # 获取当前 b30
+    # 获取当前 B30 (B27 + 3phi)
     current_b30 = self.best_n()
-    lowest_rks = min(song["rks"] for song in current_b30["best_list"])
+    b27_rks = current_b30["best_list"][26]["rks"] if len(current_b30["best_list"]) > 26 else 0
     
-    # 计算每首歌需要提升的 RKS
-    single_rks_needed = (rks_wanted * 30) / song_num
+    # 计算最小需要提升的 RKS
+    min_up_rks = rks_wanted
     
-    # 计算每个谱面需要的 acc
+    # 遍历所有谱面
     for song_name, levels in self.chart_level_data.items():
         suggestions[song_name] = {}
         
@@ -48,7 +52,8 @@ def improving_suggestion(self, rks_wanted: float = 0.01, song_num: int = 1) -> D
         if song_name in self.game_record:
             for diff, data in self.game_record[song_name].items():
                 current_scores[diff] = data["acc"]
-        
+                
+        # 对每个难度计算
         for diff, level in levels.items():
             if level <= 0:
                 suggestions[song_name][diff] = None
@@ -56,19 +61,22 @@ def improving_suggestion(self, rks_wanted: float = 0.01, song_num: int = 1) -> D
             
             # 获取当前 RKS
             current_acc = current_scores.get(diff, 0)
-            current_rks = ((current_acc/100 - 0.55)/0.45)**2 * level
+            if current_acc > 0:
+                current_rks = ((current_acc/100 - 0.55)/0.45)**2 * level
+            else:
+                current_rks = 0
             
-            # 计算目标 RKS：基于当前 RKS 或 B30 最低分（取较大值）
-            target_single_rks = max(current_rks, lowest_rks) + single_rks_needed
+            # 计算目标 RKS：使用当前 RKS 和 B27 最低分中的较大值
+            target_rks = max(b27_rks, current_rks) + min_up_rks * 30
             
             # 计算所需 acc
-            min_acc = 45 * math.sqrt(target_single_rks/level) + 55
+            needed_acc = 45 * math.sqrt(target_rks/level) + 55
             
-            # 如果目标 acc 超过 100，就不需要推分
-            if min_acc > 100:
+            # 如果需要的 acc 不合理或者低于当前 acc，就不推荐
+            if needed_acc > 100 or (current_acc > 0 and needed_acc <= current_acc):
                 suggestions[song_name][diff] = None
             else:
-                suggestions[song_name][diff] = min_acc
-            
+                suggestions[song_name][diff] = needed_acc
+    
     return suggestions
 
