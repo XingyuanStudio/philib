@@ -59,6 +59,7 @@ def calc_best_n(self, phi_n, best_n):
             )
 
     phi_list.sort(key=lambda x: x["rks"], reverse=True)
+    all_list.sort(key=lambda x: x["rks"], reverse=True)
     phi_list = phi_list[:phi_n]
     best_list = all_list[:best_n]
     return {
