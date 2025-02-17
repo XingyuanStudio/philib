@@ -68,9 +68,6 @@ class PhigrosGet:
         """返回用户 B19 数据"""
         return self.b19
 
-    def calc_best_n(self, phi_n: int = 3, best_n: int = 27) -> dict:...  # TODO @machenxiu
-                
-        
     def get_game_record(self) -> Dict[str, Dict[str, Dict[str, Union[int, float]]]]:
         """返回经整理过的用户游戏记录数据
         
@@ -135,9 +132,11 @@ class PhigrosGet:
             float: 计算谱面rks
         """
         return ((acc-55)/45)*((acc-55)/45)*difficulty
-            
-    def calc_best_n(self, phi_n: int = 3, best_n: int = 27) -> dict: 
-        pass
+
+    def calc_best_n(self, phi_n: int = 3, best_n: int = 27) -> dict: ...  # TODO @machenxiu
+                
+    def get_rks_suggest(self, rks_wanted: float = 0.01) -> dict: ...  # TODO @Xingyuan55  See #2
+        
     
     def __del__(self):
         if hasattr(self, "handle") and self.handle:
