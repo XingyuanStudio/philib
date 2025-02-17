@@ -3,7 +3,8 @@ import platform
 import json
 from typing import Dict, List, Union
 from calc_best_n import calc_best_n
-from level_tsv2json import tsv2json
+from level_tsv2json import level_tsv2json
+from calc_rks import calc_rks
 
 
 system = platform.system()
@@ -59,8 +60,7 @@ class PhigrosGet:
         self.game_record = None
         self.get_game_record()
 
-        with open("level_data.json", "r", encoding="utf-8") as f:
-            self.chart_level_data = json.load(f)
+        self.chart_level_data = level_tsv2json("Library/level_data.tsv")
 
     def get_summary(self) -> dict:
         """返回用户概览数据"""
@@ -149,4 +149,5 @@ if __name__ == "__main__":
     #     json.dump(user.b19, f, indent=4, ensure_ascii=False)
     # with open("game_record2.json", "w", encoding="utf-8") as f:
     #     json.dump(user.game_record, f, indent=4, ensure_ascii=False)
-    print(user.calc_best_n())
+    with open("bestn1.json", "w", encoding="utf-8") as f:
+        json.dump(user.calc_best_n(), f, indent=4, ensure_ascii=False)

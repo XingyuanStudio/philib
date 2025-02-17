@@ -35,7 +35,7 @@ def calc_best_n(self, phi_n, best_n):
             if every[1][level]["score"] == 1000000:
                 phi_list.append(
                     {
-                        "sone_name": every[0],
+                        "song_name": every[0],
                         "level": level,
                         "level": self.chart_level_data[every[0]][level],
                         "acc": every[1][level]["acc"],
@@ -47,7 +47,7 @@ def calc_best_n(self, phi_n, best_n):
                 )
             all_list.append(
                 {
-                    "sone_name": every[0],
+                    "song_name": every[0],
                     "level": level,
                     "level": self.chart_level_data[every[0]][level],
                     "acc": every[1][level]["acc"],
@@ -65,3 +65,4 @@ def calc_best_n(self, phi_n, best_n):
         "phi_list": phi_list,
         "best_list": best_list,
     }
+

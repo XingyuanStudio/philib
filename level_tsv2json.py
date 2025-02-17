@@ -2,7 +2,7 @@ import json
 import csv
 from typing import Dict
 
-def tsv2json(tsv_path: str, complete_width: int = 5) -> Dict[str,Dict[str,float]]:
+def level_tsv2json(tsv_path: str, complete_width: int = 5) -> Dict[str,Dict[str,float]]:
     """将谱面定数数据 tsv 转换为字典格式
     
     Args:

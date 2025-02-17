@@ -1,0 +1,186 @@
+{
+    "phi_list": [
+        {
+            "song_name": "GOODTEK.EBIMAYO",
+            "level": 14.2,
+            "acc": 100,
+            "rks": 14.2
+        },
+        {
+            "song_name": "TECHNOPOLIS2085.PRASTIKDANCEFLOOR",
+            "level": 14.1,
+            "acc": 100,
+            "rks": 14.1
+        },
+        {
+            "song_name": "TheChariotREVIIVAL.Attoclef",
+            "level": 14.0,
+            "acc": 100,
+            "rks": 14.0
+        }
+    ],
+    "best_list": [
+        {
+            "song_name": "Glaciaxion.SunsetRay",
+            "level": 1.0,
+            "acc": 0,
+            "rks": 1.4938271604938274
+        },
+        {
+            "song_name": "Glaciaxion.SunsetRay",
+            "level": 6.5,
+            "acc": 100,
+            "rks": 6.5
+        },
+        {
+            "song_name": "Glaciaxion.SunsetRay",
+            "level": 12.6,
+            "acc": 99.95199584960938,
+            "rks": 12.573132014260525
+        },
+        {
+            "song_name": "Glaciaxion.SunsetRay",
+            "level": 0.0,
+            "acc": 0,
+            "rks": 0.0
+        },
+        {
+            "song_name": "EradicationCatastrophe.NceS",
+            "level": 3.5,
+            "acc": 0,
+            "rks": 5.228395061728396
+        },
+        {
+            "song_name": "EradicationCatastrophe.NceS",
+            "level": 7.5,
+            "acc": 100,
+            "rks": 7.5
+        },
+        {
+            "song_name": "EradicationCatastrophe.NceS",
+            "level": 12.7,
+            "acc": 98.54974365234375,
+            "rks": 11.894601573702545
+        },
+        {
+            "song_name": "EradicationCatastrophe.NceS",
+            "level": 0.0,
+            "acc": 0,
+            "rks": 0.0
+        },
+        {
+            "song_name": "Credits.Frums",
+            "level": 4.5,
+            "acc": 0,
+            "rks": 6.722222222222223
+        },
+        {
+            "song_name": "Credits.Frums",
+            "level": 10.4,
+            "acc": 98.73239135742188,
+            "rks": 9.82233548638151
+        },
+        {
+            "song_name": "Credits.Frums",
+            "level": 13.6,
+            "acc": 98.44860076904297,
+            "rks": 12.67842980716665
+        },
+        {
+            "song_name": "Credits.Frums",
+            "level": 15.7,
+            "acc": 96.4655227661133,
+            "rks": 13.330575989527329
+        },
+        {
+            "song_name": "Dlyrotz.Likey",
+            "level": 4.0,
+            "acc": 0,
+            "rks": 5.975308641975309
+        },
+        {
+            "song_name": "Dlyrotz.Likey",
+            "level": 9.1,
+            "acc": 99.923583984375,
+            "rks": 9.06912020830166
+        },
+        {
+            "song_name": "Dlyrotz.Likey",
+            "level": 13.7,
+            "acc": 98.84417724609375,
+            "rks": 13.0052704858767
+        },
+        {
+            "song_name": "Dlyrotz.Likey",
+            "level": 0.0,
+            "acc": 0,
+            "rks": 0.0
+        },
+        {
+            "song_name": "EnginexStartmelodymix.CrossingSound",
+            "level": 2.5,
+            "acc": 0,
+            "rks": 3.7345679012345685
+        },
+        {
+            "song_name": "EnginexStartmelodymix.CrossingSound",
+            "level": 8.3,
+            "acc": 100,
+            "rks": 8.3
+        },
+        {
+            "song_name": "EnginexStartmelodymix.CrossingSound",
+            "level": 13.0,
+            "acc": 97.92147827148438,
+            "rks": 11.82681128944374
+        },
+        {
+            "song_name": "EnginexStartmelodymix.CrossingSound",
+            "level": 0.0,
+            "acc": 0,
+            "rks": 0.0
+        },
+        {
+            "song_name": "光.姜米條",
+            "level": 2.0,
+            "acc": 0,
+            "rks": 2.9876543209876547
+        },
+        {
+            "song_name": "光.姜米條",
+            "level": 7.5,
+            "acc": 100,
+            "rks": 7.5
+        },
+        {
+            "song_name": "光.姜米條",
+            "level": 12.4,
+            "acc": 99.47775268554688,
+            "rks": 12.113853827685302
+        },
+        {
+            "song_name": "光.姜米條",
+            "level": 0.0,
+            "acc": 0,
+            "rks": 0.0
+        },
+        {
+            "song_name": "Wintercube.CtymaxfeatNceS",
+            "level": 3.5,
+            "acc": 0,
+            "rks": 5.228395061728396
+        },
+        {
+            "song_name": "Wintercube.CtymaxfeatNceS",
+            "level": 8.2,
+            "acc": 100,
+            "rks": 8.2
+        },
+        {
+            "song_name": "Wintercube.CtymaxfeatNceS",
+            "level": 13.4,
+            "acc": 100,
+            "rks": 13.4
+        }
+    ]
+}
