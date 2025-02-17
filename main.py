@@ -144,14 +144,14 @@ class PhigrosGet:
 
 # Example usage
 if __name__ == "__main__":
-    user = PhigrosGet("ztl8rh36krtgro724jo83f3o5")
+    user = PhigrosGet("Your Session Token")
     # print(user.game_record)
     # with open("b191.json", "w", encoding="utf-8") as f:
     #     json.dump(user.b19, f, indent=4, ensure_ascii=False)
     # with open("game_record2.json", "w", encoding="utf-8") as f:
     #     json.dump(user.game_record, f, indent=4, ensure_ascii=False)】
     b30 = user.calc_best_n()
-    print(calc_rks(b30))
-    print(user.summary["rankingScore"])
+    print("自行计算", calc_rks(b30))
+    print("API获取", user.summary["rankingScore"])
     # with open("bestn1.json", "w", encoding="utf-8") as f:
     #     json.dump(user.calc_best_n(), f, indent=4, ensure_ascii=False)
