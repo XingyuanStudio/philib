@@ -2,7 +2,7 @@ from typing import Dict
 import math
 
 
-def improving_suggestion(self, rks_wanted: float = 0.01, song_num: int = 1) -> Dict[str, Dict[str, float]]:
+def improving_suggestion(self, rks_wanted: float = 0.01) -> Dict[str, Dict[str, float]]:
     """推分建议
 
     TODO  @Xingyuan55  See #2
@@ -29,6 +29,10 @@ def improving_suggestion(self, rks_wanted: float = 0.01, song_num: int = 1) -> D
             },
             ...
         }
+        
+    代码借鉴：
+    [phi-plugin](https://github.com/Catrong/phi-plugin) 之中的
+    [model/class/Save.js](https://github.com/Catrong/phi-plugin/blob/main/model/class/Save.js#L386)
     """
     suggestions: Dict[str, Dict[str, float]] = {}
     
