@@ -24,5 +24,4 @@ def calc_best_n(self, phi_n: int = 3, best_n: int = 27) -> dict:  # TODO @machen
         }
         """
 
-        self这个参数，会把main.PhigrosGet的实例传进来
  

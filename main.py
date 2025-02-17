@@ -36,6 +36,18 @@ else:
 # 先加载难度数据
 phigros.load_difficulty(bytes("Library/level_data.tsv", "utf-8"))
 
+def calc_chart_score(acc: float, difficulty: str = None) -> int:
+    """计算谱面rks
+    
+    Args:
+        acc: 准确度
+        difficulty: 谱面定数
+        
+    Returns:
+        float: 计算谱面rks
+    """
+    return ((acc - 55) / 45) * ((acc - 55) / 45) * difficulty
+
 class PhigrosGet:
     def __init__(self, sessionToken: str|bytes):
         if isinstance(sessionToken, str):  # 如果sessionToken是字符串，则将其转换为bytes
@@ -124,43 +136,7 @@ class PhigrosGet:
         self.game_record = game_record
         
     @staticmethod
-    def calc_chart_score(acc: float, difficulty: str = None) -> int:
-        """计算谱面rks
-        
-        Args:
-            acc: 准确度
-            difficulty: 谱面定数
-            
-        Returns:
-            float: 计算谱面rks
-        """
-        return ((acc - 55) / 45) * ((acc - 55) / 45) * difficulty
 
-    def calc_best_n(self, phi_n: int = 3, best_n: int = 27) -> dict:  # TODO @machenxiu
-        """
-        {
-            "phi_list":[
-                {
-                    "song_name": 曲目名称,
-                    "level": 谱面等级 [ez|hd|in|at],
-                    "rks": 谱面rks
-                    "difficulty": 谱面定数
-                    "acc": 准确度
-                }
-                ...
-            ],
-            "best_list":[
-                {
-                    "song_name": 曲目名称,
-                    "level": 谱面等级 [ez|hd|in|at],
-                    "rks": 谱面rks
-                    "difficulty": 谱面定数
-                    "acc": 准确度
-                }
-                ...
-            ]
-        }
-        """
 
 
     def get_rks_suggest(
