@@ -2,6 +2,7 @@ import ctypes
 import platform
 import json
 from typing import Dict, List, Union
+from calc_best_n import calc_best_n
 
 
 system = platform.system()
@@ -33,7 +34,7 @@ else:
     phigros.get_b19.restype = ctypes.c_char_p
 
 # 先加载难度数据
-phigros.load_difficulty(bytes("Library/difficulty.tsv", "utf-8"))
+phigros.load_difficulty(bytes("Library/level_data.tsv", "utf-8"))
 
 class PhigrosGet:
     def __init__(self, sessionToken: str|bytes):
@@ -54,7 +55,9 @@ class PhigrosGet:
         # 加载数据
         self.game_record = None
         self.get_game_record()
-         
+        
+        with open("level_data.json", "r", encoding="utf-8") as f:
+            self.chart_level_data = json.load(f)
 
     def get_summary(self) -> dict:
         """返回用户概览数据"""
@@ -163,11 +166,6 @@ class PhigrosGet:
     def get_rks_suggest(
         self, rks_wanted: float = 0.01
     ) -> dict: ...  # TODO @Xingyuan55  See #2
-
-    def calc_best_n(self, phi_n: int = 3, best_n: int = 27) -> dict: ...  # TODO @machenxiu  See #1
-                
-    def get_rks_suggest(self, rks_wanted: float = 0.01) -> dict: ...  # TODO @Xingyuan55  See #2
-        
     
     def __del__(self):
         if hasattr(self, "handle") and self.handle:
@@ -176,7 +174,7 @@ class PhigrosGet:
             except:
                 pass
 
-    
+ 
 
 # Example usage
 if __name__ == "__main__":

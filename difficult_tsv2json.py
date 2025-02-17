@@ -51,6 +51,6 @@ def tsv2json(tsv_path: str, complete_width: int = 5) -> Dict[str,Dict[str,float]
     return data
 
 if __name__ == "__main__":
-    with open("difficulty.json", "w", encoding="utf-8") as f:
-        json.dump(tsv2json("Library/difficulty.tsv"), f, indent=4, ensure_ascii=False)
+    with open("level_data.json", "w", encoding="utf-8") as f:
+        json.dump(tsv2json("Library/level_data.tsv"), f, indent=4, ensure_ascii=False)
 
