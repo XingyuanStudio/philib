@@ -1,5 +1,9 @@
 Library/nodejs/
 Library/*.txt
+Library/libzip/
+Library/nodejs/
+Library/script-py/
+Library/src/
 __pycache__/
 *.pyc
 *.pyo

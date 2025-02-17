@@ -143,27 +143,6 @@ class PhigrosGet:
 
 
 # Example usage
-if __name__ == "__main__":...
-    # user = PhigrosGet("ztl8rh36krtgro724jo83f3o5")  # KRK
-    # user = PhigrosGet("41dtbqsivitthcmrfhn817ntl")  # Xingyuan55
-    # user.game_record["Ark.kanoryo"]["at"]["acc"] = 95.64404504434387
-    # print(user.game_record)
-    # with open("b191.json", "w", encoding="utf-8") as f:
-    #     json.dump(user.b19, f, indent=4, ensure_ascii=False)
-    # with open("game_record2.json", "w", encoding="utf-8") as f:
-    #     json.dump(user.game_record, f, indent=4, ensure_ascii=False)】
-    # b30 = user.best_n()
-    # print("修改后的", calc_rks(b30))
-    # print("以前的:  13.569548190614515")
-    # with open("bestn1.json", "w", encoding="utf-8") as f:
-    #     json.dump(b30, f, indent=4, ensure_ascii=False)
-    # with open("improving_suggestion40Xingyuan55.json", "w", encoding="utf-8") as f:
-    #     json.dump(user.improving_suggestion(0.01, 1), f, indent=4, ensure_ascii=False)
-    # print("1首歌：")
-    # result1 = user.improving_suggestion(3, 1)
-    # print(result1["ATHAZA.LeaF"]["in"])
-    # print(user.improving_suggestion(0.01, 1)["Ark.kanoryo"]["at"])
-    # print("30首歌：")
-    # result30 = user.improving_suggestion(1, 20)
-    # print(result30["ATHAZA.LeaF"]["in"])
-
+if __name__ == "__main__":
+    user = PhigrosGet("Your Session")
+    

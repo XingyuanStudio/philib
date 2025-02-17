@@ -3,36 +3,39 @@ import math
 
 
 def improving_suggestion(self, rks_wanted: float = 0.01, song_num: int = 1) -> Dict[str, Dict[str, float]]:
-    """推分建议
-
-    TODO  @Xingyuan55  See #2
-
+    """推分建议算法
+    
+    计算每个谱面需要达到的最低acc，以达到期望的 RKS 提升。
+    
     Args:
-        self: main.PhigrosGet 实例
-        rks_wanted: 想要提升的总 RKS 数值
-        song_num: 希望通过几首歌来提升 RKS（默认为1）
-
+        rks_wanted: 期望提升的 RKS 数值
+        song_num: 期望通过几首歌提升 RKS
+        
     Returns:
-        Dict[str, Dict[str, float]]: 每个谱面需要达到的最低acc
+        Dict[str, Dict[str, float]]: 推分建议
         - 键: 曲目名称
-        - 值: 难度acc字典
-            - ez/hd/in/at: 最低需要的acc
-
+        - 值: 难度建议字典
+            - ez/hd/in/at: 最低需要的acc（None表示无法通过此难度提升）
+            
     Example:
-        >>> user.improving_suggestion(0.01)
+        >>> user.improving_suggestion(0.01, 1)
         {
             "Glaciaxion": {
-                "ez": 97.5,  # 表示ez难度至少要打到97.5%
-                "hd": 95.2,
-                "in": None,  # None 表示即使100%也无法达到目标
+                "ez": None,  # 无法通过此难度提升
+                "hd": 95.2,  # 需要达到95.2%
+                "in": None,
                 "at": 92.1
-            },
-            ...
+            }
         }
         
+    Note:
+        - 如果某难度已经达到或超过建议acc，将返回 None
+        - 如果某难度即使100%也无法达到目标，将返回 None
+        - 对于高定数谱面，如果定数足够高，可能建议尝试100%
+        
     代码借鉴：
-    [phi-plugin](https://github.com/Catrong/phi-plugin) 之中的
-    [model/class/Save.js](https://github.com/Catrong/phi-plugin/blob/main/model/class/Save.js#L386)
+        [phi-plugin](https://github.com/Catrong/phi-plugin) 的
+        [model/class/Save.js](https://github.com/Catrong/phi-plugin/blob/main/model/class/Save.js#L386)
     """
     suggestions: Dict[str, Dict[str, float]] = {}
     
