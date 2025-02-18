@@ -148,3 +148,12 @@ suggestions = user.improving_suggestion(
 - `chore`: 其他修改（不添加功能但在做项目维护性工作）
 - `revert`: 回退或重提以前的提交
 - `wip`: 工作进行中，包含未完成的功能
+
+## 项目贡献
+
+本项目欢迎任何形式的贡献，包括但不限于：
+
+- 提交问题报告
+- 提交代码
+
+欢迎在[Bilibili@小星圆55](https://space.bilibili.com/525310961)上关注我们！
