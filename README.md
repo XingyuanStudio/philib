@@ -2,6 +2,10 @@
 
 Philib 是一个用于获取 Phigros 玩家云存档数据的 Python 模块。本模块基于 [PhigrosLibrary](https://github.com/7aGiven/PhigrosLibrary) 开发，目的是封装一个更易用的接口，便于 Phigros 玩家查询自己的数据。
 
+> [!WARNING]
+> **严禁使用本项目或相关项目进行对Phigros数据库的攻击行为**，包括但不限于:
+> - 大规模查分对鸽游服务器进行DDOS
+
 ## 环境要求
 
 本项目需要以下环境：
@@ -75,7 +79,13 @@ philib
 
 PhigrosLibrary 使用了 GNU GPLv3 许可证，据此，Philib 也使用 GNU GPLv3 许可证。
 
-## API 接口
+## 使用方式与API接口
+
+```bash
+git clone git@github.com:XingyuanStudio/philib.git
+```
+
+我们暂时不提供pip库的安装方式，您需要手动下载、复制项目源码到您的项目中来使用。
 
 ### 1. 初始化
 
@@ -122,32 +132,18 @@ suggestions = user.improving_suggestion(
 ) -> Dict[str, Dict[str, float]]
 ```
 
-## 项目规范
+## 更新资源
 
-### 提交规范
+当您发现Phigros已经更新，而Philib尚未更新时，您可以手动更新资源:
 
-本项目使用 [Conventional Commits](https://www.conventionalcommits.org/) 规范进行代码提交。提交信息的格式如下：
+> [!TIP]
+> 资源来源：[PhigrosLibrary](https://github.com/7aGiven/PhigrosLibrary)
 
-```
-<type>: <description>
-[optional body]
-```
+1. [头像id](https://github.com/7aGiven/PhigrosLibrary/blob/main/avatar.txt)
 
-提交类型（type）必须是以下之一：
+2. [收藏品id](https://github.com/7aGiven/PhigrosLibrary/blob/main/collection.tsv)
 
-- `init`: 项目初始化
-- `feat`: 新功能
-- `fix`: 修复 bug
-- `docs`: 文档更新
-- `style`: 代码格式修改（不影响代码运行的变动）
-- `refactor`: 代码重构（既不是新增功能，也不是修复 bug）
-- `perf`: 性能优化
-- `test`: 测试相关
-- `build`: 构建系统或外部依赖修改
-- `ci`: CI 配置修改
-- `chore`: 其他修改（不添加功能但在做项目维护性工作）
-- `revert`: 回退或重提以前的提交
-- `wip`: 工作进行中，包含未完成的功能
+3. 定数表和曲绘请使用项目[Phigros_Resource](https://github.com/7aGiven/Phigros_Resource/)从apk文件中提取
 
 ## 项目贡献
 

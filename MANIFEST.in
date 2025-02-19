@@ -1,0 +1,3 @@
+include philib/Library/*.dll
+include philib/Library/*.so
+include philib/Library/*.tsv 

@@ -1,6 +1,11 @@
 from typing import Dict
 import math
 
+try:
+    from .calc_chart_rks import *
+except:
+    from calc_chart_rks import *
+
 
 def improving_suggestion(self, rks_wanted: float = 0.01, song_num: int = 1) -> Dict[str, Dict[str, float]]:
     """推分建议算法

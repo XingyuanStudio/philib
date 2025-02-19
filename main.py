@@ -2,17 +2,32 @@ import ctypes
 import platform
 import json
 from typing import Dict, List, Union
-from calc_best_n import calc_best_n
-from level_tsv2json import level_tsv2json
-from calc_rks import calc_rks
-from improving_suggestion import improving_suggestion
+try:
+    from .calc_best_n import calc_best_n
+    from .level_tsv2json import level_tsv2json
+    from .calc_rks import calc_rks
+    from .improving_suggestion import improving_suggestion
+except:
+    from calc_best_n import calc_best_n
+    from level_tsv2json import level_tsv2json
+    from calc_rks import calc_rks
+    from improving_suggestion import improving_suggestion
+import pathlib
+import os
 
+# 在文件开头定义
+def get_library_path(filename: str) -> str:
+    """获取库文件的绝对路径"""
+    # 获取当前文件所在目录
+    base_dir = pathlib.Path(__file__).parent
+    return str(base_dir / "Library" / filename)
 
+# 修改系统判断部分
 system = platform.system()
 if system == "Windows":
-    lib_name = "Library/phigros.dll"
+    lib_name = get_library_path("phigros.dll")
 elif system == "Linux":
-    lib_name = "Library/libphigros-64.so"
+    lib_name = get_library_path("libphigros-64.so")
 else:
     raise OSError("Unsupported operating system")
 
@@ -38,11 +53,13 @@ else:
 
 # 先加载定数数据
 phigros.load_level_data = phigros.load_difficulty  # 重命名函数
-phigros.load_level_data(bytes("Library/level_data.tsv", "utf-8"))
 
 
 class PhigrosGet:
-    def __init__(self, sessionToken: str | bytes):
+    def __init__(self, sessionToken: str | bytes, level_data_path: str = None):
+        if level_data_path is None:
+            level_data_path = get_library_path("level_data.tsv")
+            
         if isinstance(sessionToken, str):  # 如果sessionToken是字符串，则将其转换为bytes
             self.sessionToken = bytes(sessionToken, "utf-8")  # 使用utf-8编码
         else:
@@ -51,6 +68,10 @@ class PhigrosGet:
         self.handle = phigros.get_handle(self.sessionToken)  # 获取handle
         if not self.handle:  # 如果handle获取失败，则抛出异常
             raise RuntimeError("Failed to get handle")
+
+        # 转换为绝对路径
+        level_data_path = str(pathlib.Path(level_data_path).absolute())
+        phigros.load_level_data(bytes(level_data_path, "utf-8"))
 
         # 获取数据
         self.b19 = json.loads(phigros.get_b19(self.handle).decode("utf-8"))
@@ -62,7 +83,7 @@ class PhigrosGet:
         self.game_record = None
         self.get_game_record()
 
-        self.chart_level_data = level_tsv2json("Library/level_data.tsv")
+        self.chart_level_data = level_tsv2json(level_data_path)
 
     def get_summary(self) -> dict:
         """返回用户概览数据"""

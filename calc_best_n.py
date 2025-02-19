@@ -1,4 +1,7 @@
-from calc_chart_rks import *
+try:
+    from .calc_chart_rks import *
+except:
+    from calc_chart_rks import *
 
 
 def calc_best_n(self, phi_n, best_n):
