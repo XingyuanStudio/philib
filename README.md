@@ -1,69 +1,97 @@
 # Philib
 
+![License](https://img.shields.io/github/license/XingyuanStudio/philib)
+![Python Version](https://img.shields.io/badge/python-3.6%2B-blue)
+![Update Status](https://img.shields.io/badge/status-maintained-green)
+
+
 Philib 是一个用于获取 Phigros 玩家云存档数据的 Python 模块。本模块基于 [PhigrosLibrary](https://github.com/7aGiven/PhigrosLibrary) 开发，目的是封装一个更易用的接口，便于 Phigros 玩家查询自己的数据。
 
 > [!WARNING]
 > **严禁使用本项目或相关项目进行对Phigros数据库的攻击行为**，包括但不限于:
 > - 大规模查分对鸽游服务器进行DDOS
 
-## 环境要求
+## 🚀 快速开始 基本示例
 
-本项目需要以下环境：
+1. 克隆项目：
+```bash
+git clone git@github.com:XingyuanStudio/philib.git
+```
 
-1. **Python**: 任意现代版本
+2. 准备环境：
+```python
+# 确保您有 Python 环境，无需额外依赖
+# 将项目目录添加到 Python 路径
+```
 
-如果需要自行编译核心库，则需要以下环境：
+3. 开始使用：
+```python
+from philib import PhigrosGet
 
-2. **CMake**: 用于编译核心库
+# 初始化（使用您的会话令牌）
+user = PhigrosGet("Your_Session_Token")
 
-- 从 [CMake 官网](https://cmake.org/download/) 下载安装
+# 获取基本信息
+print(f"当前 RKS: {user.summary['rankingScore']}")
 
-3. **NMake**: 用于 Windows 环境下的编译
+# 获取 B30 成绩
+best_30 = user.best_n(phi_n=3, best_n=27)
+print(f"B30 成绩: {calc_rks(best_30)}")
+
+# 获取推分建议
+suggestions = user.improving_suggestion(rks_wanted=0.1)
+print(f"推分建议: {suggestions}")
+```
+
+## 📋 环境要求
+ 
+### 基本要求
+
+**Python**: 3.6 或更高版本
+
+
+### 编译核心库需要（可选）
+- **CMake**: [下载地址](https://cmake.org/download/)
+
+**Windows 特需**:
+- **NMake**: 
    - 方案 1: 安装 Visual Studio（包含 NMake）
    - 方案 2: 使用项目提供的独立 NMake
      - 在 `Librarys/` 目录下找到 `NMake.exe`
      - 将其添加到系统 PATH 环境变量
 
-## 核心库准备
+## 🔧 核心库准备
 
-项目依赖 PhigrosLibrary 的核心库文件：
+项目依赖 PhigrosLibrary 核心库：
 
-- Windows: `phigros.dll`
-- Linux: `libphigros-64.so`
+| 平台 | 文件名 |
+|------|---------|
+| Windows | `phigros.dll` |
+| Linux | `libphigros-64.so` |
 
-获取核心库有以下方式：
+获取方式：
 
-1. 直接使用
+1. **直接使用**：`Library/` 目录下已包含
+2. **下载编译版**：[PhigrosLibrary Releases](https://github.com/7aGiven/PhigrosLibrary/releases)
+3. **自行编译**：参考 [编译说明](Library/PhigrosLibrary.md)（或查看 [PhigrosLibrary GitHub说明](https://github.com/7aGiven/PhigrosLibrary/blob/main/PhigrosLibrary.md)）
 
-   - 在 `Library/` 目录下包含对应文件
-
-2. 下载编译好的版本
-
-   - 访问 [PhigrosLibrary Releases](https://github.com/7aGiven/PhigrosLibrary/releases)
-   - 下载对应平台的文件
-
-3. 自行编译
-   - 参考 [Library/PhigrosLibrary.md](Library/PhigrosLibrary.md) 的编译说明（或查看 [PhigrosLibrary GitHub](https://github.com/7aGiven/PhigrosLibrary/blob/main/PhigrosLibrary.md)）
-
-## 项目主要结构
+## 📁 项目结构
 
 ```bash
-philib
-├── Library/
-│   ├── python/         # Python 示例代码
-│   ├── src/            # 核心库源码
-│   ├── script-py/      # 支持脚本
-│   │   Phigros.dll         # 支持库(Windows)
-│   │   libphigros-64.so         # 支持库(Linux)
-│  .gitignore
-│  main.py  # 主程序
-│  improving_suggestion.py  # 推分建议算法
-│  calc_best_n.py  # 最佳成绩计算
-│  calc_chart_rks.py  # 单谱面rks计算
-│  calc_rks.py  # 总rks计算
-│  level_tsv2json.py  # 谱面定数数据转换
-│  README.md
-│  __init__.py
+philib/
+├── Library/                    # 核心库及支持文件
+│   ├── python/                # Python 示例代码
+│   ├── src/                   # 核心库源码
+│   ├── script-py/             # 支持脚本
+│   ├── phigros.dll           # Windows 支持库
+│   └── libphigros-64.so      # Linux 支持库
+├── main.py                    # 主程序
+├── improving_suggestion.py    # 推分建议算法
+├── calc_best_n.py            # 最佳成绩计算
+├── calc_chart_rks.py         # 单谱面 RKS 计算
+├── calc_rks.py               # 总 RKS 计算
+├── level_tsv2json.py         # 谱面定数数据转换
+└── __init__.py
 ```
 
 为方便开发，我们保留了 PhigrosLibrary 的部分支持文件，您可以：
@@ -79,8 +107,7 @@ philib
 
 PhigrosLibrary 使用了 GNU GPLv3 许可证，据此，Philib 也使用 GNU GPLv3 许可证。
 
-## 使用方式与API接口
-
+## 📖 API 详细说明
 ```bash
 git clone git@github.com:XingyuanStudio/philib.git
 ```
@@ -88,68 +115,89 @@ git clone git@github.com:XingyuanStudio/philib.git
 我们暂时不提供pip库的安装方式，您需要手动下载、复制项目源码到您的项目中来使用。
 
 ### 1. 初始化
-
 ```python
-user = PhigrosGet(sessionToken: str | bytes)
+# sessionToken: 游戏会话令牌，可以是字符串或字节类型
+# level_data_path: 难度数据文件路径（可选）
+PhigrosGet(sessionToken: str | bytes, level_data_path: str = None)
 ```
 
-### 2. 基础数据获取
+### 2. 数据获取
+
+在初始化时，系统会自动获取并缓存以下基础数据，您可以通过类属性直接访问：
 
 ```python
-# 获取用户概览数据
-summary = user.get_summary() -> dict
+# 用户概览数据（包含用户基本信息和 RKS 等）
+PhigrosGet().summary: dict
 
-# 获取用户存档数据
-save = user.get_save() -> dict
+# 用户存档数据（包含所有原始未经整理的游戏记录）
+PhigrosGet().save: dict
 
-# 获取用户 B19 数据
-b19 = user.get_b19() -> dict
+# 用户 B19 数据（包含 B19 榜单信息）
+PhigrosGet().b19: dict
 
-# 获取用户游戏记录
-game_record = user.get_game_record() -> Dict[str, Dict[str, Dict[str, Union[int, float]]]]
+# 用户游戏记录（经过整理的所有曲目成绩数据）
+PhigrosGet().game_record: dict
 ```
 
-### 3. 成绩计算
+> [!TIP]
+> 以上数据在初始化时已经获取并缓存，直接通过属性访问可以避免重复计算。如果需要刷新数据，可以使用对应的方法：
+> ```python
+> user.get_summary()   # 获取最新用户概览
+> user.get_save()      # 获取最新存档
+> user.get_b19()       # 获取最新 B19
+> user.get_game_record() # 获取最新游戏记录
+> ```
 
+### 3. 成绩计算功能
 ```python
-# 计算用户最佳成绩 (B30 = phi_n + best_n)
-best_n = user.best_n(phi_n: int = 3, best_n: int = 27) -> dict
+# 计算用户最佳成绩 (Best_n = phi_n + best_n)
+# phi_n: Phi 曲目数量（默认3）
+# best_n: 最佳曲目数量（默认27）
+PhigrosGet().best_n(phi_n: int = 3, best_n: int = 27) -> dict
 
-# 计算单谱面 RKS
-rks = calc_chart_rks(acc: float, level: float) -> float
-
-# 计算总 RKS
-rks = calc_rks(best_n: dict) -> float
-```
-
-### 4. 推分建议
-
-```python
 # 获取推分建议
-suggestions = user.improving_suggestion(
-    rks_wanted: float = 0.01,  # 期望提升的 RKS
-    song_num: int = 1  # 要通过几首歌提升
-) -> Dict[str, Dict[str, float]]
+# rks_wanted: 期望提升的 RKS（默认0.01）
+# song_num: 要通过几首歌提升（默认1）
+PhigrosGet().improving_suggestion(
+    rks_wanted: float = 0.01,
+    song_num: int = 1 
+) -> dict
+
+# 计算单谱面 RKS（独立函数）
+calc_chart_rks(acc: float, level: float) -> float
+
+# 计算总 RKS（独立函数）
+calc_rks(best_n: dict) -> float
+
 ```
 
-## 更新资源
+## 🔄 更新资源
 
 当您发现Phigros已经更新，而Philib尚未更新时，您可以手动更新资源:
 
 > [!TIP]
 > 资源来源：[PhigrosLibrary](https://github.com/7aGiven/PhigrosLibrary)
 
-1. [头像id](https://github.com/7aGiven/PhigrosLibrary/blob/main/avatar.txt)
+1. **头像**: [avatar.txt](https://github.com/7aGiven/PhigrosLibrary/blob/main/avatar.txt)
+2. **收藏品**: [collection.tsv](https://github.com/7aGiven/PhigrosLibrary/blob/main/collection.tsv)
+3. **定数表和曲绘**: 使用 [Phigros_Resource](https://github.com/7aGiven/Phigros_Resource/) 从 APK 提取
 
-2. [收藏品id](https://github.com/7aGiven/PhigrosLibrary/blob/main/collection.tsv)
 
-3. 定数表和曲绘请使用项目[Phigros_Resource](https://github.com/7aGiven/Phigros_Resource/)从apk文件中提取
-
-## 项目贡献
+## 🤝 参与贡献
 
 本项目欢迎任何形式的贡献，包括但不限于：
 
-- 提交问题报告
-- 提交代码
+- 🐛 提交 Bug 报告
+- ✨ 提交新功能建议
+- 📝 改进文档
+- 💻 提交代码
 
-欢迎在[Bilibili@小星圆55](https://space.bilibili.com/525310961)上关注我们！
+
+## 📱 联系我们
+
+- 欢迎在[Bilibili@小星圆55](https://space.bilibili.com/525310961)上关注我们！
+- 提交 Issue 或 PR
+
+## 📄 许可证
+
+本项目基于 GNU GPLv3 许可证开源。

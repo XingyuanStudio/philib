@@ -148,6 +148,7 @@ class PhigrosGet:
                     "fc": fc,
                 }
         self.game_record = game_record
+        return game_record
 
     def improving_suggestion(self, rks_wanted: float = 0.01, song_num: int = 1) -> dict:  # TODO @Xingyuan55  See #2
         return improving_suggestion(self, rks_wanted, song_num)
