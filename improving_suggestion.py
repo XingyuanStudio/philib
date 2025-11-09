@@ -27,7 +27,7 @@ def improving_suggestion(self, rks_wanted: float = 0.01, song_num: int = 1) -> D
         {
             "Glaciaxion": {
                 "ez": None,  # 无法通过此难度提升
-                "hd": 95.2,  # 需要达到95.2%
+                "hd": 95.2,  # acc需要达到95.2%
                 "in": None,
                 "at": 92.1
             }
@@ -105,3 +105,14 @@ def improving_suggestion(self, rks_wanted: float = 0.01, song_num: int = 1) -> D
     
     return suggestions
 
+def remove_unavailable(suggestions_dict) -> dict:
+    result_dict = suggestions_dict.copy()
+    
+    for song in list(result_dict.keys()):
+        for level in list(result_dict[song].keys()):
+            if result_dict[song][level] is None:
+                result_dict[song].pop(level)
+        if not result_dict[song]:
+            result_dict.pop(song)
+            
+    return result_dict

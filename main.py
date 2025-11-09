@@ -6,12 +6,12 @@ try:
     from .calc_best_n import calc_best_n
     from .level_tsv2json import level_tsv2json
     from .calc_rks import calc_rks
-    from .improving_suggestion import improving_suggestion
+    from .improving_suggestion import improving_suggestion, remove_unavailable
 except:
     from calc_best_n import calc_best_n
     from level_tsv2json import level_tsv2json
     from calc_rks import calc_rks
-    from improving_suggestion import improving_suggestion
+    from improving_suggestion import improving_suggestion, remove_unavailable
 import pathlib
 import os
 
