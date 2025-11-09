@@ -1,6 +1,6 @@
 try:
     from .calc_chart_rks import *
-except ImportError:
+except:
     from calc_chart_rks import *
 
 
@@ -51,23 +51,26 @@ def calc_best_n(self, phi_n, best_n):
     level_list = ["ez", "hd", "in", "at"]
     all_list = []
     phi_list = []
+    best_list = []
     for every in self.game_record.items():
         for level in level_list:
             if every[1][level]["score"] == 1000000:
                 phi_list.append(
                     {
                         "song_name": every[0],
-                        "level"    : self.chart_level_data[every[0]][level],
-                        "acc"      : every[1][level]["acc"],
-                        "rks"      : calc_chart_rks(every[1][level]["acc"], self.chart_level_data[every[0]][level]),
+                        "level": level,
+                        "level": self.chart_level_data[every[0]][level],
+                        "acc": every[1][level]["acc"],
+                        "rks": calc_chart_rks(every[1][level]["acc"], self.chart_level_data[every[0]][level]),
                     }
                 )
             all_list.append(
                 {
                     "song_name": every[0],
-                    "level"    : self.chart_level_data[every[0]][level],
-                    "acc"      : every[1][level]["acc"],
-                    "rks"      : calc_chart_rks(every[1][level]["acc"], self.chart_level_data[every[0]][level]),
+                    "level": level,
+                    "level": self.chart_level_data[every[0]][level],
+                    "acc": every[1][level]["acc"],
+                    "rks": calc_chart_rks(every[1][level]["acc"], self.chart_level_data[every[0]][level]),
                 }
             )
 
@@ -76,6 +79,7 @@ def calc_best_n(self, phi_n, best_n):
     phi_list = phi_list[:phi_n]
     best_list = all_list[:best_n]
     return {
-        "phi_list" : phi_list,
+        "phi_list": phi_list,
         "best_list": best_list,
     }
+

@@ -170,6 +170,11 @@ PhigrosGet().improving_suggestion(
     song_num: int = 1
 ) -> dict
 
+# 去除"无法推分"的建议（独立函数）
+remove_unavailable(suggestions_dict) -> dict
+# 常见用法：
+remove_unavailable(user.improving_suggestion(...))
+
 # 计算单谱面 RKS（独立函数）
 calc_chart_rks(acc: float, level: float) -> float
 

@@ -1,9 +1,9 @@
-import math
 from typing import Dict
+import math
 
 try:
     from .calc_chart_rks import *
-except ImportError:
+except:
     from calc_chart_rks import *
 
 
@@ -43,56 +43,56 @@ def improving_suggestion(self, rks_wanted: float = 0.01, song_num: int = 1) -> D
         [model/class/Save.js](https://github.com/Catrong/phi-plugin/blob/main/model/class/Save.js#L386)
     """
     suggestions: Dict[str, Dict[str, float]] = {}
-
+    
     # 获取当前 B30 (B27 + 3phi)
     current_b30 = self.best_n()
     b27_rks = current_b30["best_list"][26]["rks"] if len(current_b30["best_list"]) > 26 else 0
-
+    
     # 获取最高 phi 分
     phi_list = [song for song in current_b30["phi_list"] if song]
     b0_rks = max((song["rks"] for song in phi_list), default=0) if phi_list else 0
-
+    
     # 计算最小提升量（考虑四舍五入）
     current_rks = self.rks
     min_up_rks = math.floor(current_rks * 100) / 100 + 0.005 - current_rks
     if min_up_rks < 0:
         min_up_rks += 0.01
-
+    
     # 使用最小提升量和目标提升量中的较大值
     rks_wanted = max(rks_wanted, min_up_rks)
-
+    
     # 计算每首歌需要提升的基础 RKS（不含 *30）
     single_rks_base = rks_wanted / song_num
-
+    
     # 遍历所有谱面
     for song_name, levels in self.chart_level_data.items():
         suggestions[song_name] = {}
-
+        
         # 获取当前成绩
         current_scores = {}
         if song_name in self.game_record:
             for diff, data in self.game_record[song_name].items():
                 current_scores[diff] = data["acc"]
-
+                
         # 对每个难度计算
         for diff, level in levels.items():
             if level <= 0:
                 suggestions[song_name][diff] = None
                 continue
-
+            
             # 获取当前 RKS
             current_acc = current_scores.get(diff, 0)
             if current_acc > 0:
-                current_rks = ((current_acc / 100 - 0.55) / 0.45) ** 2 * level
+                current_rks = ((current_acc/100 - 0.55)/0.45)**2 * level
             else:
                 current_rks = 0
-
+            
             # 计算目标 RKS：使用当前 RKS 和 B27 最低分中的较大值
             target_rks = max(b27_rks, current_rks) + single_rks_base * 30
-
+            
             # 计算所需 acc
-            needed_acc = 45 * math.sqrt(target_rks / level) + 55
-
+            needed_acc = 45 * math.sqrt(target_rks/level) + 55
+            
             # 如果需要的 acc 不合理或者低于当前 acc，就不推荐
             if needed_acc > 100 or (current_acc > 0 and needed_acc <= current_acc):
                 # 对于高定数谱面，如果定数足够高，建议尝试 100%
