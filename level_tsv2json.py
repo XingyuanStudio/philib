@@ -1,8 +1,9 @@
-import json 
 import csv
+import json
 from typing import Dict
 
-def level_tsv2json(tsv_path: str, complete_width: int = 5) -> Dict[str,Dict[str,float]]:
+
+def level_tsv2json(tsv_path: str, complete_width: int = 5) -> Dict[str, Dict[str, float]]:
     """将谱面定数数据 tsv 转换为字典格式
     
     Args:
@@ -35,13 +36,13 @@ def level_tsv2json(tsv_path: str, complete_width: int = 5) -> Dict[str,Dict[str,
         }
 
     """
-    data: Dict[str,Dict[str,float]] = {}
+    data: Dict[str, Dict[str, float]] = {}
     with open(tsv_path, "r", encoding="utf-8") as f:
         reader = csv.reader(f, delimiter="\t")
         for row in reader:  # 一曲的定数信息
             if len(row) < complete_width:  # 补全定数信息
                 row.append(0)
-                
+
             data[row[0]] = {
                 "ez": float(row[1]),
                 "hd": float(row[2]),
@@ -50,7 +51,7 @@ def level_tsv2json(tsv_path: str, complete_width: int = 5) -> Dict[str,Dict[str,
             }
     return data
 
+
 if __name__ == "__main__":
     with open("level_data.json", "w", encoding="utf-8") as f:
         json.dump(level_tsv2json("Library/level_data.tsv"), f, indent=4, ensure_ascii=False)
-

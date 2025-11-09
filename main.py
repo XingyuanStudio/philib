@@ -1,19 +1,22 @@
 import ctypes
-import platform
 import json
-from typing import Dict, List, Union
+import platform
+from typing import *
+
+from .download_difficult import *
+
 try:
     from .calc_best_n import calc_best_n
     from .level_tsv2json import level_tsv2json
     from .calc_rks import calc_rks
     from .improving_suggestion import improving_suggestion
-except:
+except ImportError:
     from calc_best_n import calc_best_n
     from level_tsv2json import level_tsv2json
     from calc_rks import calc_rks
     from improving_suggestion import improving_suggestion
 import pathlib
-import os
+
 
 # 在文件开头定义
 def get_library_path(filename: str) -> str:
@@ -21,6 +24,7 @@ def get_library_path(filename: str) -> str:
     # 获取当前文件所在目录
     base_dir = pathlib.Path(__file__).parent
     return str(base_dir / "Library" / filename)
+
 
 # 修改系统判断部分
 system = platform.system()
@@ -30,7 +34,6 @@ elif system == "Linux":
     lib_name = get_library_path("libphigros-64.so")
 else:
     raise OSError("Unsupported operating system")
-
 
 try:
     phigros = ctypes.CDLL(lib_name)
@@ -66,9 +69,12 @@ class PhigrosGet:
         Raises:
             RuntimeError: _description_
         """
+        # download difficulty data
+        download_difficult()
+        print("Download difficult data is ok.")
         if level_data_path is None:
             level_data_path = get_library_path("level_data.tsv")
-            
+
         if isinstance(sessionToken, str):  # 如果sessionToken是字符串，则将其转换为bytes
             self.sessionToken = bytes(sessionToken, "utf-8")  # 使用utf-8编码
         else:
@@ -84,10 +90,11 @@ class PhigrosGet:
 
         # 获取数据
         self.b19 = json.loads(phigros.get_b19(self.handle).decode("utf-8"))
+
         self.summary = json.loads(phigros.get_summary(self.handle).decode("utf-8"))
+
         self.rks = self.summary["rankingScore"]
         self.save = json.loads(phigros.get_save(self.handle).decode("utf-8"))
-
         # 加载数据
         self.game_record = None
         self.get_game_record()
@@ -148,13 +155,13 @@ class PhigrosGet:
             game_record[song_name] = {}
             # 每3个元素是一个难度的记录（分数、准确度、是否FC），包裹在字典中
             for i in range(0, len(records), 3):
-                score, acc, fc = records[i : i + 3]
+                score, acc, fc = records[i: i + 3]
                 difficulty_map = {0: "ez", 3: "hd", 6: "in", 9: "at"}
                 difficulty = difficulty_map[i]
                 game_record[song_name][difficulty] = {
                     "score": score,
-                    "acc": acc,
-                    "fc": fc,
+                    "acc"  : acc,
+                    "fc"   : fc,
                 }
         self.game_record = game_record
         return game_record

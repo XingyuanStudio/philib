@@ -10,4 +10,3 @@ def calc_chart_rks(acc: float, level: float = None) -> float:
             - acc < 70% 时返回0
     """
     return 0 if acc < 0.7 else ((acc - 55) / 45) * ((acc - 55) / 45) * level
- 
