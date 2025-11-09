@@ -57,6 +57,15 @@ phigros.load_level_data = phigros.load_difficulty  # 重命名函数
 
 class PhigrosGet:
     def __init__(self, sessionToken: str | bytes, level_data_path: str = None):
+        """
+
+        Args:
+            sessionToken (str | bytes): 用户存档的sessionToken
+            level_data_path (str, optional): 定数表文件路径. 默认为None, 采用`/Library/level_data.tsv`. 
+
+        Raises:
+            RuntimeError: _description_
+        """
         if level_data_path is None:
             level_data_path = get_library_path("level_data.tsv")
             
@@ -166,5 +175,4 @@ class PhigrosGet:
 
 # Example usage
 if __name__ == "__main__":
-    user = PhigrosGet("Your Session")
-    
+    user = PhigrosGet("Your Session Token")
